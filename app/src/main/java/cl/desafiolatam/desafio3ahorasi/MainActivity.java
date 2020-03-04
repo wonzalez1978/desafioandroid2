@@ -24,9 +24,7 @@ String question1;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //mostrar fragment en activity
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, new MainFragment().newInstance(question1))
-                .commit();
+
         Api apiService = RetrofitClient.getInstance().create(Api.class);
         Call<Result>call = apiService.getAllQuestions();
         call.enqueue(new Callback<Result>() {
@@ -36,6 +34,9 @@ String question1;
                 question1 = questionList.get(0).getQuestion();
                 Toast.makeText(MainActivity.this, questionList.get(0).getQuestion(), Toast.LENGTH_SHORT).show();
                 Log.d("MainActivity", "onResponse: " + questionList.get(0).getQuestion());
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new MainFragment(questionList))
+                                .commit();
             }
 
             @Override

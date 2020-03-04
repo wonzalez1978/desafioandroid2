@@ -12,29 +12,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
+import cl.desafiolatam.desafio3ahorasi.models.Question;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment {
 String question2;
-    public MainFragment newInstance(String question) {
+List<Question> questions;
+   /*public MainFragment newInstance(String question) {
+
         MainFragment fragment = new MainFragment();
         Bundle arguments = new Bundle();
         arguments.putString("QUESTION", question);
         Log.d("MainActivity", "newInstance: " + question);
         fragment.setArguments(arguments);
         return fragment;
-
-
         // Required empty public constructor
-    }
+    }*/
 
+    public MainFragment(List<Question> questions) {
+        this.questions = questions;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        question2 = getArguments().getString("QUESTION");
-        Log.d("MainFragment", "onCreateView: " + question2);
+
 
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
@@ -43,6 +49,6 @@ String question2;
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView pregunta = view.findViewById(R.id.textView2);
-        pregunta.setText(question2);
+        pregunta.setText(questions.get(0).getQuestion());
     }
 }
